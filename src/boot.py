@@ -36,7 +36,8 @@ while True:
             draw_screen(
                 random.randint(0, 120),
                 random.randint(0, 150),
-                random.randint(0, 1),
+                bool(random.randint(0, 1)),
+                bool(random.randint(0, 1)),
                 random.randint(0, 100),
             )
             sleep(0.1)
@@ -48,7 +49,7 @@ while True:
     boiler_temp = int(fields[1])
     hx_temp = int(fields[3])
     countdown = int(fields[4])
-    heating_element_state = bool(int(fields[5]))
+    is_heating = bool(int(fields[5]))
     pump_running = bool(int(fields[6]))
 
     current_time = time()
@@ -64,4 +65,4 @@ while True:
     else:
         timer_value = last_pump_stop_time - last_pump_start_time
 
-    draw_screen(hx_temp, boiler_temp, heating_element_state, timer_value)
+    draw_screen(hx_temp, boiler_temp, is_heating, pump_running, timer_value)

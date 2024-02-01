@@ -17,7 +17,8 @@ if [ "$INSTALL_ODROID_GO" = true ] ; then
 fi
 
 echo "Uploading files to $DEVICE"
-rshell --buffer-size 32 -a -p $DEVICE cp -r src/boot.py src/ui.py imgs/ /flash/
+rshell --buffer-size 32 -a -p $DEVICE cp src/boot.py src/ui.py /flash/
+rshell --buffer-size 32 -a -p $DEVICE cp imgs/flame.bmp imgs/water.bmp /flash/imgs/
 
 echo "Connecting to $DEVICE REPL"
 echo "Press Ctrl+D to reboot the device and Ctrl+X to exit"

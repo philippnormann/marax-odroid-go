@@ -145,7 +145,7 @@ def draw_steam_gauge(temperature, x, y, height, width):
         x + width,
         y,
         50,
-        height + 20,
+        height + 10,
         color=GO.lcd.BLACK,
         fillcolor=GO.lcd.BLACK,
     )
@@ -161,15 +161,30 @@ def draw_steam_gauge(temperature, x, y, height, width):
 
 
 def draw_heat_widget(state, x, y):
-    if state == 1:
-        GO.lcd.image(x, y, "flame.bmp")
+    if state:
+        GO.lcd.image(x, y, "imgs/flame.bmp")
     else:
         # Clear the widget
         GO.lcd.rect(
             x,
             y,
-            32,
-            32,
+            20,
+            20,
+            color=GO.lcd.BLACK,
+            fillcolor=GO.lcd.BLACK,
+        )
+
+
+def draw_pump_widget(state, x, y):
+    if state:
+        GO.lcd.image(x, y, "imgs/water.bmp")
+    else:
+        # Clear the widget
+        GO.lcd.rect(
+            x,
+            y,
+            20,
+            20,
             color=GO.lcd.BLACK,
             fillcolor=GO.lcd.BLACK,
         )
@@ -201,10 +216,15 @@ def draw_timer_widget(time, x, y):
     )
 
 
-def draw_screen(hx_temp, boiler_temp, is_heating, time_passed):
+def draw_screen(hx_temp, boiler_temp, is_heating, pump_running, time_passed):
     padding = 10
-    steam_widget_width = 20
+
     heat_widget_width = 20
+    heat_widget_height = 20
+
+    steam_widget_width = 20
+    steam_widget_height = SCREEN_HEIGHT - padding * 3 - heat_widget_height
+
     draw_temperature_gauge(
         hx_temp,
         SCREEN_WIDTH // 2 + steam_widget_width + padding,
@@ -212,16 +232,21 @@ def draw_screen(hx_temp, boiler_temp, is_heating, time_passed):
     )
     draw_steam_gauge(
         boiler_temp,
-        10,
-        heat_widget_width + padding * 2,
-        SCREEN_HEIGHT - heat_widget_width - padding * 4,
+        padding,
+        padding,
+        steam_widget_height,
         steam_widget_width,
     )
-    draw_heat_widget(is_heating, padding, padding)
+    draw_heat_widget(is_heating, padding, steam_widget_height + padding * 2)
+    draw_pump_widget(
+        pump_running,
+        heat_widget_width + padding * 2,
+        steam_widget_height + padding * 2,
+    )
     draw_timer_widget(
         time_passed,
         SCREEN_WIDTH // 2 + steam_widget_width + padding,
-        SCREEN_HEIGHT - padding * 5,
+        SCREEN_HEIGHT - padding * 4,
     )
 
 
