@@ -1,0 +1,4 @@
+[submodule "ODROID-GO-MicroPython"]
+	path = ODROID-GO-MicroPython
+	url = https://github.com/hardkernel/ODROID-GO-MicroPython
+	branch = loboris
